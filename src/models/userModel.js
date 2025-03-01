@@ -13,9 +13,6 @@ const userSchema = mongoose.Schema({
         type:String,
         required:[true,'password is required']
     },
-    address:{
-        type:Array
-    },
     phone:{
         type:String,
         required:[true, 'phone number is required']
@@ -29,10 +26,6 @@ const userSchema = mongoose.Schema({
     profile:{
         type:String,
         default:'https://e7.pngegg.com/pngimages/831/88/png-clipart-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design.png'
-    },
-    answer:{
-        type:String,
-        required:[true,'Answer is required']
     }
 },{timestamps:true});
 
