@@ -20,6 +20,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
 app.use('/uploads', express.static('uploads'));
+app.use("/api/v1/banner", require("./routes/bannerRoutes"));
 app.use("/api/v1/auth",require("./routes/authRoutes"))
 app.use("/api/v1/user",require("./routes/userRoutes"))
 app.use("/api/v1/resturant",require("./routes/resturantRoutes"));
