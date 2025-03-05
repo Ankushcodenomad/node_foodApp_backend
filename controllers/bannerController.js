@@ -1,19 +1,33 @@
 const bannerModel = require('../models/bannerModel');
+const multer = require("multer");
+const path = require("path");
 
-const createBannerController = async (req, res) => {
+const storage = multer.diskStorage({
+	destination: "./uploads/", // Save images in the 'uploads' folder
+	filename: (req, file, cb) => {
+	  cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
+	},
+  });
+  const upload = multer({ storage });
+const createBannerController = async (req, res) => {	
 	try {
-		const { imageUrl, isActive } = req.body;
-		if(!imageUrl){
-			res.status(404).send({
-				success:false,
-				message:"Image not found!"
-			})
-		}
-		const banner = new bannerModel({ imageUrl, isActive });
-		await banner.save();
-		res.status(201).send({ success: true, message: "Banner created successfully", banner });
+		   console.log("#########################")
+			if (!req.file) {
+			  return res.status(400).send({ success: false, message: "No image uploaded!" });
+			}
+		
+			const imageUrl = `http://localhost:3001/uploads/${req.file.filename}`;
+		
+			const newBanner = new bannerModel({ imageUrl, isActive: true });
+			await newBanner.save();
+		
+			res.status(201).send({ success: true, message: "Banner uploaded successfully", banner: newBanner });
+		
 	} catch (error) {
+		console.log("🚀 ~ createBannerController ~ error:", error)
+		
 		res.status(500).send({ success: false, message: "Server error", error: error.message });
+
 	}
 };
 
@@ -66,4 +80,4 @@ const deleteBannerController = async (req, res) => {
 		res.status(500).send({ success: false, message: "Server error", error: error.message });
 	}
 };
-module.exports = { createBannerController,getAllBannersController,getBannerByIdController,updateBannerController,deleteBannerController }
+module.exports = { createBannerController,getAllBannersController,getBannerByIdController,updateBannerController,deleteBannerController,upload }
