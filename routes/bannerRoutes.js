@@ -14,5 +14,5 @@ router.post("/createBanner",upload.single("image"),authMiddleware,createBannerCo
 router.get("/getAllBanner", authMiddleware, getAllBannersController);
 router.get("/getBannerById:id", authMiddleware, getBannerByIdController);
 router.put("/updateById:id", authMiddleware, updateBannerController);
-router.delete("/deleteBanner:id", authMiddleware, deleteBannerController);
+router.delete("/deleteBanner/:id", authMiddleware, deleteBannerController);
 module.exports = router;

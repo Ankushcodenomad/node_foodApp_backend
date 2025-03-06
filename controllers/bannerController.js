@@ -71,12 +71,14 @@ const updateBannerController = async (req, res) => {
 // Delete a banner
 const deleteBannerController = async (req, res) => {
 	try {
+		console.log("req.params.id",req.params.id)
 		const banner = await bannerModel.findByIdAndDelete(req.params.id);
 		if (!banner) {
 			return res.status(404).send({ success: false, message: "Banner not found" });
 		}
 		res.status(200).send({ success: true, message: "Banner deleted successfully" });
 	} catch (error) {
+		console.log("🚀 ~ deleteBannerController ~ error:", error)
 		res.status(500).send({ success: false, message: "Server error", error: error.message });
 	}
 };
